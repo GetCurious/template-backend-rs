@@ -1,17 +1,4 @@
-use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest};
-use actix_web::dev::Server;
-use std::net::TcpListener;
-
-async fn health_check(_req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().finish()
-}
-
-pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
-    let server = HttpServer::new(|| {
-        App::new()
-            .route("/health_check", web::get().to(health_check))
-    })
-        .listen(listener)?
-        .run();
-    Ok(server)
-}
+#![allow(clippy::toplevel_ref_arg)]
+pub mod configuration;
+pub mod routes;
+pub mod startup;
