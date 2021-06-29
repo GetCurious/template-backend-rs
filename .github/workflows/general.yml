@@ -37,7 +37,6 @@ jobs:
           sudo apt-get install libpq-dev -y
           cargo install sqlx-cli --no-default-features --features postgres
           ./scripts/init_db.sh
-      - name: Run test
       - uses: actions-rs/cargo@v1
         with:
           command: test
@@ -52,7 +51,6 @@ jobs:
           toolchain: stable
           override: true
           components: rustfmt
-      - name: Run cargo-fmt
       - uses: actions-rs/cargo@v1
         with:
           command: fmt
@@ -68,7 +66,6 @@ jobs:
           components: clippy
           toolchain: stable
           override: true
-      - name: Run cargo-clippy
       - uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -78,12 +75,16 @@ jobs:
     name: Code coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
+
       - name: Run cargo-tarpaulin
-      - uses: actions-rs/tarpaulin@v0.1
+        uses: actions-rs/tarpaulin@v0.1
         with:
           args: '--ignore-tests'
