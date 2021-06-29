@@ -26,7 +26,6 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Checkout repository
       - uses: actions/checkout@v2
 
       - name: Install stable toolchain
@@ -71,7 +70,6 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
       - uses: actions/checkout@v2
 
       - name: Install stable toolchain
@@ -91,7 +89,6 @@ jobs:
     name: Code coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
       - uses: actions/checkout@v2
 
       - name: Install stable toolchain
