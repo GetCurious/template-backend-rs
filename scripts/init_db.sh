@@ -29,19 +29,19 @@ RUNNING_POSTGRES_CONTAINER=$(docker run \
   -p "${DB_PORT}":5432 \
   postgres \
   -c max_connections=1000)
-  # ^ Increase postgres max connections for testing purposes
+# ^ Increase postgres max connections for testing purposes
 
 sleep 3
 
 # Keep pinging Postgres until it's ready to accept commands
-until docker exec -e PGPASSWORD="${DB_PASSWORD}" "${RUNNING_POSTGRES_CONTAINER}" psql -h "localhost" -U "${DB_USER}" -p "${DB_PORT}" -d "postgres" -c '\q'; do
+until docker exec -e PGPASSWORD="${DB_PASSWORD}" "${RUNNING_POSTGRES_CONTAINER}" psql -h "${DB_HOST}" -U "${DB_USER}" -p "${DB_PORT}" -d "postgres" -c '\q'; do
   echo >&2 "Postgres is still unavailable - sleeping"
   sleep 3
 done
 
 echo >&2 "Postgres is up and running on port ${DB_PORT} - running migrations now!"
 
-export DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}
+export DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 sqlx database create
 sqlx migrate run
 
