@@ -269,6 +269,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90c108c1a94380c89d2215d0ac54ce09796823cca0fd91b299cfff3b33e346fb"
 
 [[package]]
+name = "async-trait"
+version = "0.1.50"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0b98e84bbb4cbcdd97da190ba0c58a1bb0de2c1fdf67d159e192ed766aeca722"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "atoi"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -576,6 +587,9 @@ name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "encoding_rs"
@@ -1244,6 +1258,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "opentelemetry"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b91cea1dfd50064e52db033179952d18c770cbc5dfefc8eba45d619357ba3914"
+dependencies = [
+ "async-trait",
+ "futures",
+ "js-sys",
+ "lazy_static",
+ "percent-encoding",
+ "pin-project",
+ "rand",
+ "thiserror",
+]
+
+[[package]]
 name = "parking_lot"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1600,6 +1630,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde-aux"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "905f2fc9f3d1574e8b5923a58118240021f01d4e239673937ffb9f42707a4f22"
+dependencies = [
+ "chrono",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "serde_derive"
 version = "1.0.126"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1616,6 +1657,7 @@ version = "1.0.64"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "799e97dc9fdae36a5c8b8f2cae9ce2ee9fdce2058c57a93e6099d919fd982f79"
 dependencies = [
+ "indexmap",
  "itoa",
  "ryu",
  "serde",
@@ -1796,9 +1838,12 @@ dependencies = [
  "either",
  "futures",
  "heck",
+ "hex",
  "once_cell",
  "proc-macro2",
  "quote",
+ "serde",
+ "serde_json",
  "sha2",
  "sqlx-core",
  "sqlx-rt",
@@ -2107,14 +2152,18 @@ dependencies = [
 
 [[package]]
 name = "tracing-actix-web"
-version = "0.3.0-beta.3"
+version = "0.4.0-beta.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1f61ca5db1113b7b2ad09585d24d1143e940465596ba434ba19d506ee2ab28a1"
+checksum = "d232c700ac99b41f56aac3832f138009b2dc7538cbdc76fdc6b8304a1ee2d2e0"
 dependencies = [
+ "actix-http",
+ "actix-service",
  "actix-web",
  "futures",
+ "opentelemetry",
  "tracing",
  "tracing-futures",
+ "tracing-opentelemetry",
  "uuid",
 ]
 
@@ -2174,6 +2223,19 @@ dependencies = [
  "lazy_static",
  "log",
  "tracing-core",
+]
+
+[[package]]
+name = "tracing-opentelemetry"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "99003208b647dae59dcefc49c98aecaa3512fbc29351685d4b9ef23a9218458e"
+dependencies = [
+ "opentelemetry",
+ "tracing",
+ "tracing-core",
+ "tracing-log",
+ "tracing-subscriber",
 ]
 
 [[package]]
@@ -2487,6 +2549,7 @@ dependencies = [
  "once_cell",
  "reqwest",
  "serde",
+ "serde-aux",
  "sqlx",
  "tokio",
  "tracing",
